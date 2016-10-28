@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SterlingLogParsers>
+  <SterlingLogParser name="Sterling Log Parser" default="true"
+    >
+    <!-- Use below to validate log line like 2014-03-13 14:22:11,316:DEBUG  :Thread-22_AEOOrderLoadAsyncService_QM2_0: Executing invoke [system]: ApiHelper -->
+    <ValidationExpression>
+  <![CDATA[
+(?x)                                       #global setting: x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #Sterling time stamp
+:.*                                        #Sterling log level
+:.*                                        #Sterling log content
+  ]]>
+    </ValidationExpression>
+    <ParsingExpression>
+      <!-- Use below to parse log line like 2014-03-13 14:22:11,344:DEBUG  :Thread-17_AEOOrderLoadSubService: app context not enabled [system]: AppContextInfoUtil -->
+  <![CDATA[
+(?sx)                                      #global setting: s=dotall (use . to capture multi-line messages), x = Allow comments and ignore whitespace
+\A                                         #Start of input
+(?<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3}) #Capture sterling time stamp as "time"
+:(?<level>\w+)\s*                          #Capture Sterling log level as "level"
+:(?<thread>\S+?)(_(?<service>\S+))??       #Capture String thread and optinally service as "thread" and "service"
+:(?<message>.*)                            #Capture Stering message as "message"
+\[\w+\]:\s*                                #Skip the Sterling's [system] block
+(?<actClass>\S+)\s*                        #Capture String action class as "actClass"
+  ]]>
+    </ParsingExpression>
+    <TimeStampFormat>yyyy-MM-dd HH:mm:ss,SSS</TimeStampFormat>
+  </SterlingLogParser>
+  <SterlingLogParser name="JBoss Log Parser">
+    <!-- Below expression validate log line like: 2014-03-27 10:34:48,692 INFO  [STDOUT] (http-0.0.0.0-8080-1) 2014-03-27 10:34:48,692:SQLDEBUG:http-0.0.0.0-8080-1: Executing sql [Prepared Statement -  SELECT  /*YANTRA*/    YFS_ORGANIZATION.* FROM YFS_ORGANIZATION YFS_ORGANIZATION     WHERE (YFS_ORGANIZATION.ORGANIZATION_KEY = 'AEO_US') [system]: YFCEntityDBHome           -->
+    <ValidationExpression>
+  <![CDATA[
+(?x)                                       #global setting: x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #frist (JBOSS) time stamp
+\s\w*                                      #JBOSS log level
+\s+\[STDOUT\]                              #JBOSS [STDOUT] text
+\s\(\S*\)\s                                #JBOSS method name (main)
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #Sterling time stamp
+:.*                                        #Sterling log level
+:.*                                        #Sterling log content
+  ]]>
+    </ValidationExpression>
+    <ParsingExpression>
+  <![CDATA[
+(?sx)                                      #global setting: s=dotall (use . to capture multi-line messages), x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #frist (JBOSS) time stamp
+\s\w*                                      #JBOSS log level
+\s+\[STDOUT\]                              #JBOSS [STDOUT] text
+\s\(\S*\)\s                                #JBOSS method name (main)
+(?<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3}) #Capture sterling time stamp
+:(?<level>\w+)\s*                          #Capture Sterling log level 
+:(?<thread>\S+?)(_(?<service>\S+))??       #Capture Strling thread and optionally service name
+:(?<message>.*)                            #Capture Sterling message
+\[\w+\]:\s*                                #Skip the Sterling's [system] block
+(?<actClass>\S+)\s*                        #Capture String action class      
+  ]]>
+    </ParsingExpression>
+    <TimeStampFormat>yyyy-MM-dd HH:mm:ss,SSS</TimeStampFormat>
+  </SterlingLogParser>
+  <SterlingLogParser name="Perf JBoss Log Parser">
+    <!-- Below expression validate log line like: 2014-03-27 10:34:48,692 INFO  [STDOUT] (http-0.0.0.0-8080-1) 2014-03-27 10:34:48,692:SQLDEBUG:http-0.0.0.0-8080-1: Executing sql [Prepared Statement -  SELECT  /*YANTRA*/    YFS_ORGANIZATION.* FROM YFS_ORGANIZATION YFS_ORGANIZATION     WHERE (YFS_ORGANIZATION.ORGANIZATION_KEY = 'AEO_US') [system]: YFCEntityDBHome           -->
+    <ValidationExpression>
+  <![CDATA[
+(?x)                                       #global setting: x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #frist (JBOSS) time stamp
+:.*                                        #Sterling log level
+:.*                                        #Sterling log content
+  ]]>
+    </ValidationExpression>
+    <ParsingExpression>
+  <![CDATA[
+(?sx)                                      #global setting: s=dotall (use . to capture multi-line messages), x = Allow comments and ignore whitespace
+\A                                         #Start of input
+(?<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3}) #Capture sterling time stamp
+:(?<level>\w+)\s*                          #Capture Sterling log level 
+:(?<thread>\S+)(_(?<service>\S+))??\s*    #Capture Strling thread and optionally service name
+:(?<message>.*)                            #Capture Sterling message
+\[\w+\]\s*:\s*                                #Skip the Sterling's [system] block
+(?<actClass>\S+)\s*                        #Capture String action class   
+  ]]>
+    </ParsingExpression>
+    <TimeStampFormat>yyyy-MM-dd HH:mm:ss,SSS</TimeStampFormat>
+  </SterlingLogParser>
+  
+  
+   <SterlingLogParser name="ECI App Server Log Parser">
+    <!-- Below expression validate log line like: [12/11/14 11:34:27:535 CET] 000001fd SystemOut     O 2014-11-12 11:34:27,535:TIMER  :WebContainer : 9: com.yantra.shared.dbclasses.YFS_Atp_RulesDBCacheHome.selectWithWhere - End -  [3] [X05208GO]: YFCEntityDBHome  -->
+    <ValidationExpression>
+  <![CDATA[
+(?x)                                      #global setting: s=dotall (use . to capture multi-line messages), x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\[\d{1,2}/\d{1,2}/\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}:\d{3}\s\w+\] #frist (JBOSS) time stamp
+\s\w+         #0000001fd
+\s\w+         #SystemOut
+\s+\w+\s+       # App Server thread number and SystemOut
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #Capture sterling time stamp
+:.*                                        #Sterling log level
+:.*                                        #Sterling log content
+  ]]>
+    </ValidationExpression>
+    <ParsingExpression>
+  <![CDATA[
+(?sx)                                      #global setting: s=dotall (use . to capture multi-line messages), x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\[\d{1,2}/\d{1,2}/\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}:\d{3}\s\w+\] #frist (JBOSS) time stamp
+\s\w+         #0000001fd
+\s\w+         #SystemOut
+\s+\w+\s+       # App Server thread number and SystemOut
+(?<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3}) #Capture sterling time stamp
+:(?<level>\w+)\s*                          #Capture Sterling log level 
+:(?<service>\w+)\s*       #Capture Strling service name
+:(?<thread>\s*\w+)            #Capture Strling thread name
+:(?<message>.*)                            #Capture Sterling message
+\[\w+\]:\s*                                #Skip the Sterling's [system] block
+(?<actClass>\S+)\s*                        #Capture String action class 
+  ]]>
+    </ParsingExpression>
+    <TimeStampFormat>yyyy-MM-dd HH:mm:ss,SSS</TimeStampFormat>
+  </SterlingLogParser>
+
+<SterlingLogParser name="Weblogic Log Parser" default="false" >
+    <!-- Use below to validate log line like 2015-08-19 13:08:30,708:VERBOSE:[ACTIVE] ExecuteThread: '2' for queue: 'weblogic.kernel.Default (self-tuning)':  selectWithWhere: Processing: Prepared Statement -  WHERE  PROPERTY_NAME = 'ycp.ue.tokenAuthentication.class'  [system]: [CTC]: YFS_User_ExitDBCacheHome  -->
+    <ValidationExpression>
+  <![CDATA[
+(?x)                                       #global setting: x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #Sterling time stamp
+:.*                                        #Sterling log level
+:.*                                        #Some weird Weblog stuff
+:.*                                        #Thread
+:.*                                        #Sterling log content
+  ]]>
+    </ValidationExpression>
+    <ParsingExpression>
+      <!-- Use below to parse log line like 2015-08-19 13:08:30,708:VERBOSE:[ACTIVE] ExecuteThread: '2' for queue: 'weblogic.kernel.Default (self-tuning)':  selectWithWhere: Processing: Prepared Statement -  WHERE  PROPERTY_NAME = 'ycp.ue.tokenAuthentication.class'  [system]: [CTC]: YFS_User_ExitDBCacheHome -->
+  <![CDATA[
+(?sx)                                      #global setting: s=dotall (use . to capture multi-line messages), x = Allow comments and ignore whitespace
+\A                                         #Start of input
+(?<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3}) #Capture sterling time stamp as "time"
+:(?<level>\w+)\s*                          #Capture Sterling log level as "level"
+:\[\w+\]\s+\w+       					   #Skip [ACTIVE] ExecuteThread
+:(?<thread>.+?)                            #Capture String thread and optinally service as "thread" 
+:(?<service>.+?)                           #Capture service 
+:(?<message>.*)                            #Capture Stering message as "message"
+\[\w+\]:\s*                                #Skip the Sterling's [system] block
+\[\w+\]:\s*                                #Skip the Sterling's [CTC] block
+(?<actClass>\S+)\s*                        #Capture String action class as "actClass"
+  ]]>
+    </ParsingExpression>
+    <TimeStampFormat>yyyy-MM-dd HH:mm:ss,SSS</TimeStampFormat>
+  </SterlingLogParser>
+  
+
+</SterlingLogParsers>

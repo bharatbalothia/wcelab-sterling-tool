@@ -1,0 +1,8 @@
+TODO List
+1. Search
+2. Filter by log category
+3. Open the last accessed directory (partially done. Keep track the last accessed directory during runtime but does not persist)
+5. Splash
+6. Load multiple log files
+
+4. Progress bar for parsing file (done)

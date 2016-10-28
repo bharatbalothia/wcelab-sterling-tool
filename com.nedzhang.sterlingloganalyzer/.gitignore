@@ -1,0 +1,5 @@
+/bin
+/logFileForTesting
+/fxbuild
+/build_no_longer_use_use_fxbuild_instead
+/.jazzignore

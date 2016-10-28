@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.nedzhang.sterlingloganalyzer.gui.*?>
+<?import com.nedzhang.sterlingloganalyzer.gui.ThreadProcessThreeWidget?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+<?scenebuilder-classpath-element ../../../../../bin?>
+
+<VBox fx:id="panelMain" prefHeight="455.0" prefWidth="676.9999000000025" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.nedzhang.sterlingloganalyzer.gui.LogAnalyzerMainForm">
+  <!-- TODO Add Nodes -->
+  <children>
+    <MenuBar>
+      <menus>
+        <Menu mnemonicParsing="false" onShowing="#onFileMenuShowing" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#onMenuOpen" text="Open">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <!-- <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onMenuExtractLog" text="Extract Log Entries" disable="true" fx:id="menuExtractLog" />
+            -->
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <Menu mnemonicParsing="false" onShowing="#onMenuParserShowing" text="Parser" fx:id="menuParser">
+              <items>
+                <fx:define>
+                  <ToggleGroup fx:id="toggleGroupParser" />
+                </fx:define>
+                <RadioMenuItem mnemonicParsing="false" text="Fake stuff" toggleGroup="$toggleGroupParser" />
+                <!-- <RadioMenuItem mnemonicParsing="false" onAction="#setParser" selected="true" text="AEO Sterling Parser" toggleGroup="$toggleGroupParser" />
+                <RadioMenuItem mnemonicParsing="false" onAction="#setParser" text="AEO JBoss Parser" toggleGroup="$toggleGroupParser" />
+                -->
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Parser Filter">
+              <items>
+                <CheckMenuItem disable="true" mnemonicParsing="false" selected="true" text="TIMER" fx:id="checkParseFilterTimer" />
+                <CheckMenuItem mnemonicParsing="false" selected="true" text="SQLDEBUG" fx:id="checkParseFilterSqldebug" />
+                <CheckMenuItem mnemonicParsing="false" selected="true" text="DEBUG" fx:id="checkParseFilterDebug" />
+                <CheckMenuItem mnemonicParsing="false" selected="true" text="VERBOSE" fx:id="checkParseFilterVerbose" />
+              </items>
+            </Menu>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onMenuCreatePerfXml" text="Create Performance XML" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onMenuClose" text="Close" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane prefHeight="200.0" prefWidth="400.0" VBox.margin="$x1" VBox.vgrow="ALWAYS">
+      <children>
+        <ThreadProcessThreeWidget fx:id="processTreeWidget" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <VBox fx:id="panelProcessWait" padding="$x1" prefHeight="200.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+              <center>
+                <ImageView fx:id="imgViewSplash" pickOnBounds="true" preserveRatio="true" visible="true">
+                  <image>
+                    <Image url="/cookie_monster_wait.gif" />
+                  </image>
+                </ImageView>
+              </center>
+              <VBox.margin>
+                <Insets fx:id="x1" />
+              </VBox.margin>
+            </BorderPane>
+          </children>
+        </VBox>
+      </children>
+      <padding>
+        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+      </padding>
+    </AnchorPane>
+  </children>
+</VBox>
