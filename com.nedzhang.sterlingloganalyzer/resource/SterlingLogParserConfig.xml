@@ -153,6 +153,36 @@
     </ParsingExpression>
     <TimeStampFormat>yyyy-MM-dd HH:mm:ss,SSS</TimeStampFormat>
   </SterlingLogParser>
+
+<SterlingLogParser name="CTC Websphere Log Parser" default="false" >
+    <!-- Use below to validate log line like 2015-08-19 13:08:30,708:VERBOSE:[ACTIVE] ExecuteThread: '2' for queue: 'weblogic.kernel.Default (self-tuning)':  selectWithWhere: Processing: Prepared Statement -  WHERE  PROPERTY_NAME = 'ycp.ue.tokenAuthentication.class'  [system]: [CTC]: YFS_User_ExitDBCacheHome  -->
+    <ValidationExpression>
+  <![CDATA[
+(?x)                                       #global setting: x = Allow comments and ignore whitespace
+\A                                         #Start of input
+\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3} #Sterling time stamp
+:.*                                        #Sterling log level
+:.*                                        #Some weird Weblog stuff
+:.*                                        #Thread
+:.*                                        #Sterling log content
+  ]]>
+    </ValidationExpression>
+    <ParsingExpression>
+      <!-- Use below to parse log line like 2015-08-19 13:08:30,708:VERBOSE:[ACTIVE] ExecuteThread: '2' for queue: 'weblogic.kernel.Default (self-tuning)':  selectWithWhere: Processing: Prepared Statement -  WHERE  PROPERTY_NAME = 'ycp.ue.tokenAuthentication.class'  [system]: [CTC]: YFS_User_ExitDBCacheHome -->
+  <![CDATA[
+(?sx)                                      #global setting: s=dotall (use . to capture multi-line messages), x = Allow comments and ignore whitespace
+\A                                         #Start of input
+(?<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3}) #Capture sterling time stamp as "time"
+:(?<level>\w+)\s*                          #Capture Sterling log level as "level"
+:\s*(?<service>\S+)\s*                     
+:\s*(?<thread>\w+)\s*
+:(?<message>.*) 
+:\s*\[\w+\]\s*
+:\s*(?<actClass>\S+)\s* 
+  ]]>
+    </ParsingExpression>
+    <TimeStampFormat>yyyy-MM-dd HH:mm:ss,SSS</TimeStampFormat>
+  </SterlingLogParser>
   
 
 </SterlingLogParsers>

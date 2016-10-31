@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="NZ Sterling Log Analyzer" default="do-distribute" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
+	
+	<property name="folder-fx-build-dist" value="../fxbuild" />
+	
+	<property name="dist-zip-file" value="nzloganalyzer.zip" />
+	
+	<property name="resource-dir" value="../resource" />
+	
+	<target name="clean">
+		<subant failonerror="true" buildpath="${folder-fx-build-dist}" antfile="build.xml" target="setup-staging-area" />
+		<delete file="${dist-zip-file}" />
+	</target>
+	
+	<target name="do-distribute" depends="clean">
+		
+		<subant failonerror="true" buildpath="${folder-fx-build-dist}" antfile="build.xml" target="do-deploy" />
+		
+		<zip destfile="${dist-zip-file}" >
+			<zipfileset dir="${folder-fx-build-dist}/dist" prefix="nzloganalyzer/bin" />
+			<zipfileset dir="${resource-dir}" prefix="nzloganalyzer/bin/resource" />
+			<zipfileset dir="../src" prefix="nzloganalyzer/src" />
+			<zipfileset dir="./bin_to_copy" prefix="nzloganalyzer/bin" />
+		</zip>
+		
+	</target>
+
+</project>

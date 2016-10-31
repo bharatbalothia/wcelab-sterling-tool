@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
-<anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://at.bestsolution.efxclipse.tooling.jdt/1.0" buildDirectory="${project}/fxbuild">
-  <deploy height="600" placeholderref="com.nedzhang.sterlingloganalyzer.ref" placeholderid="com.nedzhang.sterlingloganalyzer.id" width="800" packagingFormat="none">
-    <application name="NZ Sterling Log Analyzer" mainclass="com.nedzhang.sterlingloganalyzer.gui.LogAnalyzerMain" version="1.1" toolkit="swing"/>
-    <info vendor="NZ Werk"/>
+<anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://org.eclipse.fx.ide.jdt/1.0" buildDirectory="${project}/fxbuild">
+  <deploy>
+    <application mainclass="com.nedzhang.sterlingloganalyzer.gui.LogAnalyzerMain" version="2.0"/>
+    <info title="NZ Sterling Log Analyzer" vendor="NZ Awesome"/>
   </deploy>
   <signjar/>
-  <manifestEntries name="Application-Name" value="NZ Sterling Log Analyzer"/>
 </anttasks:AntTask>
