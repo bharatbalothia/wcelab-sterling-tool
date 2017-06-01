@@ -29,7 +29,7 @@ import com.nedzhang.skunktool3.widget.ApiUIRunner;
 import com.nedzhang.skunktool3.widget.ConnectionSetter;
 import com.nedzhang.util.ResourceUtil;
 import com.nedzhang.util.XmlUtil;
-import com.sun.glass.ui.mac.MacApplication;
+//import com.sun.glass.ui.mac.MacApplication;
 //import com.sun.tools.javac.util.Paths;
 
 import javafx.beans.value.ChangeListener;

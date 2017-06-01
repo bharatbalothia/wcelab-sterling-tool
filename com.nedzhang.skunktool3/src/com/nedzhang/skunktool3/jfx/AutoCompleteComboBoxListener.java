@@ -126,6 +126,7 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
             // press enter key programmatically to have this entry added
             @SuppressWarnings("deprecation")
 			KeyEvent ke = KeyEvent.impl_keyEvent(comboBox, KeyCode.ENTER.toString(), KeyCode.ENTER.getName(), KeyCode.ENTER.impl_getCode(), false, false, false, false, KeyEvent.KEY_RELEASED);
+            
             comboBox.fireEvent(ke);
         }
     }
