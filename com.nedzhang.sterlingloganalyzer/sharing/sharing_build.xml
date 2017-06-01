@@ -19,7 +19,7 @@
 		<zip destfile="${dist-zip-file}" >
 			<zipfileset dir="${folder-fx-build-dist}/dist" prefix="nzloganalyzer/bin" />
 			<zipfileset dir="${resource-dir}" prefix="nzloganalyzer/bin/resource" />
-			<zipfileset dir="../src" prefix="nzloganalyzer/src" />
+			<zipfileset dir="${folder-fx-build-dist}/build/src" prefix="nzloganalyzer/src" />
 			<zipfileset dir="./bin_to_copy" prefix="nzloganalyzer/bin" />
 		</zip>
 		
