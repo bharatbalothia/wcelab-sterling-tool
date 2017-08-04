@@ -206,6 +206,8 @@ public class ApiUIRunner extends ApiRunner {
 						ChainedApi api = new ChainedApi((Element) apiNode);
 						if (api.name != null && api.name.length() > 0) {
 							apiList.add(api);
+						} else if (!api.flowName.isEmpty()) {
+							apiList.add(api);
 						}
 					}
 				}
